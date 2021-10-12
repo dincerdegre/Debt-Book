@@ -13,7 +13,7 @@
             android:name=".AddPaymentActivity"
             android:exported="true" />
         <activity
-            android:name=".AddDebtActivity"
+            android:name=".AddDebtPaymentActivity"
             android:exported="true" />
         <activity
             android:name=".ClientAccountActivity"

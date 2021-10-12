@@ -7,17 +7,42 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.degresoftware.debtbook.databinding.ActivityMainBinding
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private lateinit var database : SQLiteDatabase
+    private lateinit var clientList : ArrayList<Client>
+    private lateinit var clientAdapter : ClientAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         database = this.openOrCreateDatabase("DebtBook", Context.MODE_PRIVATE,null)
+        clientList = ArrayList<Client>()
+        clientAdapter = ClientAdapter(clientList)
+        binding.clientRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.clientRecyclerView.adapter = clientAdapter
+
+        try {
+            val cursor = database.rawQuery("SELECT * FROM clients",null)
+            val clientNameIx = cursor.getColumnIndex("clientName")
+            val idIx = cursor.getColumnIndex("id")
+            while (cursor.moveToNext()){
+                val name = cursor.getString(clientNameIx)
+                val id = cursor.getInt(idIx)
+                val total : Double = 0.00
+                val client = Client(name,id,total)
+                clientList.add(client)
+            }
+            clientAdapter.notifyDataSetChanged()
+            cursor.close()
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
 
     }
 
