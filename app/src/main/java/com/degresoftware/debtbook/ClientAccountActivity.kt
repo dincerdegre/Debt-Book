@@ -8,13 +8,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.degresoftware.debtbook.databinding.ActivityClientAccountBinding
 import com.degresoftware.debtbook.databinding.ActivityMainBinding
+import java.lang.Exception
 
 class ClientAccountActivity : AppCompatActivity() {
     private lateinit var binding : ActivityClientAccountBinding
     private lateinit var database : SQLiteDatabase
     private lateinit var selectedId : String
+    private lateinit var transactionList : ArrayList<Transaction>
+    private lateinit var transactionAdapter : TransactionAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityClientAccountBinding.inflate(layoutInflater)
@@ -34,6 +38,31 @@ class ClientAccountActivity : AppCompatActivity() {
             binding.imageView.setImageBitmap(bitmap)
         }
         cursor.close()
+
+        transactionList = ArrayList<Transaction>()
+        transactionAdapter = TransactionAdapter(transactionList)
+        binding.transactionRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.transactionRecyclerView.adapter = transactionAdapter
+
+        try {
+            val cursor = database.rawQuery("SELECT * FROM transactions WHERE clientId = ?",arrayOf(selectedId.toString()))
+            val idIx = cursor.getColumnIndex("id")
+            val amountIx = cursor.getColumnIndex("amount")
+            val typeIx = cursor.getColumnIndex("type")
+            while (cursor.moveToNext()){
+                val id = cursor.getInt(idIx)
+                val amount = cursor.getString(amountIx).toDouble()
+                val type = cursor.getString(typeIx)
+                val transaction = Transaction(id,amount,type)
+                transactionList.add(transaction)
+            }
+            transactionAdapter.notifyDataSetChanged()
+            cursor.close()
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+
+
 
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

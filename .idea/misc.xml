@@ -7,9 +7,10 @@
         <entry key="..\:/DebtBook/app/src/main/res/layout/activity_add_client.xml" value="0.2015625" />
         <entry key="..\:/DebtBook/app/src/main/res/layout/activity_add_debt.xml" value="0.27445652173913043" />
         <entry key="..\:/DebtBook/app/src/main/res/layout/activity_add_debt_payment.xml" value="0.2015625" />
-        <entry key="..\:/DebtBook/app/src/main/res/layout/activity_client_account.xml" value="0.27445652173913043" />
+        <entry key="..\:/DebtBook/app/src/main/res/layout/activity_client_account.xml" value="0.1" />
         <entry key="..\:/DebtBook/app/src/main/res/layout/activity_main.xml" value="0.2015625" />
         <entry key="..\:/DebtBook/app/src/main/res/layout/recycler_row.xml" value="0.2015625" />
+        <entry key="..\:/DebtBook/app/src/main/res/layout/recycler_transaction_row.xml" value="0.27445652173913043" />
         <entry key="..\:/DebtBook/app/src/main/res/menu/add_client.xml" value="0.2015625" />
         <entry key="..\:/DebtBook/app/src/main/res/menu/add_debt.xml" value="0.2015625" />
         <entry key="..\:/DebtBook/app/src/main/res/menu/client_account.xml" value="0.2015625" />
